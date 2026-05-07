@@ -29,6 +29,32 @@ export default function PostDetail() {
       <Field label="期待對方">{post.partnerExpectation}</Field>
       <Field label="預期週數">{post.expectedWeeks} 週</Field>
 
+      {(owner.qaAnswers.defining || owner.qaAnswers.titleOfMyLife || owner.qaAnswers.readingHours) && (
+        <div className="mt-8 pt-6 border-t border-tag/30">
+          <div className="text-walnut-soft text-xs mb-3">關於 {owner.nickname}</div>
+          <div className="space-y-3">
+            {owner.qaAnswers.defining && (
+              <div>
+                <div className="text-walnut-soft text-xs">最能形容自己的書</div>
+                <div className="text-walnut text-sm mt-1">{owner.qaAnswers.defining}</div>
+              </div>
+            )}
+            {owner.qaAnswers.titleOfMyLife && (
+              <div>
+                <div className="text-walnut-soft text-xs">人生若是一本書</div>
+                <div className="text-walnut text-sm mt-1">《{owner.qaAnswers.titleOfMyLife}》</div>
+              </div>
+            )}
+            {owner.qaAnswers.readingHours && (
+              <div>
+                <div className="text-walnut-soft text-xs">每週看書時數</div>
+                <div className="text-walnut text-sm mt-1">{owner.qaAnswers.readingHours} 小時</div>
+              </div>
+            )}
+          </div>
+        </div>
+      )}
+
       {!isMine ? (
         <div className="mt-8">
           <Link href={`/apply/${post.id}`}><Button>我要申請</Button></Link>

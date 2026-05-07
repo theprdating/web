@@ -27,11 +27,12 @@ export default function Update() {
   if (!meId || !room) return null;
 
   const has25 = Object.values(notes).some((n) => n.userId === meId && n.bookId === room.bookId && n.type === "milestone_25");
+  const has100 = Object.values(notes).some((n) => n.userId === meId && n.bookId === room.bookId && n.type === "milestone_100");
 
   const saveProgress = () => {
     upsertProgress({ userId: meId, bookId: room.bookId, percent, updatedAt: Date.now() });
     if (percent >= 25 && !has25) setShow25(true);
-    else if (percent >= 100) setShow100(true);
+    else if (percent >= 100 && !has100) setShow100(true);
     else router.push(`/room/${room.id}`);
   };
 
@@ -52,7 +53,7 @@ export default function Update() {
       });
     });
     setShow25(false);
-    if (percent >= 100) setShow100(true);
+    if (percent >= 100 && !has100) setShow100(true);
     else router.push(`/room/${room.id}`);
   };
 

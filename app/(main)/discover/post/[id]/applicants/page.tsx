@@ -12,9 +12,15 @@ export default function Applicants() {
   const apps = useFolioStore((s) => Object.values(s.applications).filter((a) => a.postId === id));
   const users = useFolioStore((s) => s.users);
   const upsertApplication = useFolioStore((s) => s.upsertApplication);
+  const upsertPost = useFolioStore((s) => s.upsertPost);
   const upsertRoom = useFolioStore((s) => s.upsertRoom);
 
   if (!post) return null;
+
+  const closePost = () => {
+    upsertPost({ ...post, status: "closed" });
+    router.push("/discover");
+  };
 
   const accept = (appId: string) => {
     const app = useFolioStore.getState().applications[appId];
@@ -37,7 +43,14 @@ export default function Applicants() {
 
   return (
     <PageContainer>
-      <h1 className="font-display text-3xl text-walnut mb-6">申請者</h1>
+      <div className="flex justify-between items-center mb-6">
+        <h1 className="font-display text-3xl text-walnut">申請者</h1>
+        {post.status === "open" ? (
+          <button onClick={closePost} className="text-walnut-soft text-sm underline">關閉貼文</button>
+        ) : (
+          <span className="text-walnut-soft text-sm">已關閉</span>
+        )}
+      </div>
 
       {apps.length === 0 && <div className="text-walnut-soft">還沒有人申請。</div>}
 
