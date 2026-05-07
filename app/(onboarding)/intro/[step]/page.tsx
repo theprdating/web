@@ -20,9 +20,11 @@ export default async function Intro({ params }: { params: Promise<{ step: string
       <div className="flex-1 relative">
         <Image src={item.image} alt="" fill className="object-cover" />
         <div className="absolute inset-0 bg-gradient-to-b from-parchment/0 via-parchment/0 to-parchment" />
-        <div className="absolute inset-0 flex flex-col items-center justify-end pb-24 px-6 text-center">
-          <h1 className="font-display text-5xl text-walnut">{item.title}</h1>
-          <p className="mt-4 text-walnut-soft text-lg leading-relaxed whitespace-pre-line">{item.body}</p>
+        <div className="absolute inset-0 flex flex-col items-center justify-end px-6 pb-10 text-center">
+          <div className="bg-parchment/85 backdrop-blur-sm rounded-2xl px-6 py-5 max-w-[90%] shadow-sm">
+            <h1 className="font-display text-5xl text-walnut">{item.title}</h1>
+            <p className="mt-3 text-walnut-soft text-base leading-relaxed whitespace-pre-line">{item.body}</p>
+          </div>
         </div>
       </div>
 

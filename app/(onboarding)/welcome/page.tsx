@@ -11,10 +11,12 @@ export default function Welcome() {
       <div className="flex-1 relative">
         <Image src="/illustrations/welcome.png" alt="" fill priority className="object-cover" />
         <div className="absolute inset-0 bg-gradient-to-b from-parchment/0 via-parchment/0 to-parchment" />
-        <div className="absolute inset-0 flex flex-col items-center justify-center px-6 text-center">
-          <h2 className="font-display text-3xl text-walnut">歡迎來到</h2>
-          <h1 className="font-display text-7xl text-walnut mt-2 tracking-wide">Folio</h1>
-          <p className="mt-6 text-walnut-soft text-lg leading-relaxed">在書頁之間，<br/>遇見懂你的靈魂。</p>
+        <div className="absolute inset-0 flex flex-col items-center justify-end px-6 pb-10 text-center">
+          <div className="bg-parchment/85 backdrop-blur-sm rounded-2xl px-6 py-5 max-w-[90%] shadow-sm">
+            <h2 className="font-display text-3xl text-walnut">歡迎來到</h2>
+            <h1 className="font-display text-7xl text-walnut mt-2 tracking-wide">Folio</h1>
+            <p className="mt-6 text-walnut-soft text-lg leading-relaxed">在書頁之間，<br/>遇見懂你的靈魂。</p>
+          </div>
         </div>
       </div>
 
