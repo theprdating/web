@@ -4,6 +4,7 @@ import { notFound } from "next/navigation";
 import Button from "@/components/ui/Button";
 import PageDots from "@/components/onboarding/PageDots";
 import { ONBOARDING } from "@/lib/onboarding-content";
+import PageTransition from "@/components/shared/PageTransition";
 
 export default async function Intro({ params }: { params: Promise<{ step: string }> }) {
   const { step } = await params;
@@ -14,6 +15,7 @@ export default async function Intro({ params }: { params: Promise<{ step: string
   const nextLabel = item.step < 4 ? "繼續" : "開始註冊";
 
   return (
+    <PageTransition>
     <main className="min-h-screen flex flex-col">
       <div className="flex-1 relative">
         <Image src={item.image} alt="" fill className="object-cover" />
@@ -34,5 +36,6 @@ export default async function Intro({ params }: { params: Promise<{ step: string
         </div>
       </div>
     </main>
+    </PageTransition>
   );
 }

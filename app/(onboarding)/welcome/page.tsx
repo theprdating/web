@@ -2,9 +2,11 @@ import Link from "next/link";
 import Image from "next/image";
 import Button from "@/components/ui/Button";
 import PageDots from "@/components/onboarding/PageDots";
+import PageTransition from "@/components/shared/PageTransition";
 
 export default function Welcome() {
   return (
+    <PageTransition>
     <main className="min-h-screen flex flex-col">
       <div className="flex-1 relative">
         <Image src="/illustrations/welcome.png" alt="" fill priority className="object-cover" />
@@ -26,5 +28,6 @@ export default function Welcome() {
         </div>
       </div>
     </main>
+    </PageTransition>
   );
 }
