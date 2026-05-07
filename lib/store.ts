@@ -72,7 +72,7 @@ export type Message = {
   createdAt: number;
 };
 
-type State = {
+export type State = {
   currentUserId: string | null;
   users: Record<string, User>;
   books: Record<string, Book>;
