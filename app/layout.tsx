@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import { Cormorant_Garamond, Noto_Serif_TC, Noto_Sans_TC } from "next/font/google";
 import "./globals.css";
+import StoreHydrator from "@/components/shared/StoreHydrator";
 
 const cormorant = Cormorant_Garamond({ subsets: ["latin"], weight: ["500","600","700"], variable: "--font-cormorant" });
 const notoSerifTC = Noto_Serif_TC({ subsets: ["latin"], weight: ["500","600","700"], variable: "--font-noto-serif-tc" });
@@ -15,6 +16,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
   return (
     <html lang="zh-Hant" className={`${cormorant.variable} ${notoSerifTC.variable} ${notoSansTC.variable}`}>
       <body className="bg-parchment text-walnut">
+        <StoreHydrator />
         <div className="max-w-[480px] mx-auto min-h-screen relative">
           {children}
         </div>

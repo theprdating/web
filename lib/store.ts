@@ -1,4 +1,5 @@
 import { create } from "zustand";
+import { saveState, loadState } from "./persistence";
 
 export type Stance = "純粹書友" | "純粹找緣分" | "不拘";
 export type ReadingMins = "<1" | "1-3" | "3-7" | "7-14" | "14+";
@@ -119,5 +120,26 @@ export const useFolioStore = create<State>((set) => ({
     set((s) => ({ progress: { ...s.progress, [`${p.userId}:${p.bookId}`]: p } })),
   appendMessage: (m) => set((s) => ({ messages: { ...s.messages, [m.id]: m } })),
 }));
+
+export function hydrateFromStorage() {
+  const persisted = loadState();
+  if (persisted) {
+    useFolioStore.setState(persisted as any);
+  }
+}
+
+useFolioStore.subscribe((state) => {
+  saveState({
+    currentUserId: state.currentUserId,
+    users: state.users,
+    books: state.books,
+    posts: state.posts,
+    applications: state.applications,
+    rooms: state.rooms,
+    notes: state.notes,
+    progress: state.progress,
+    messages: state.messages,
+  });
+});
 
 (useFolioStore as any).getInitialState = () => initialState;
