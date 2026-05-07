@@ -55,6 +55,14 @@ no text, no decorative borders — pure character cutout for layering.
 - 角色變大或變小、姿勢不同（六個顏色要嚴格一致 silhouette）
 - 笑臉、表情變化
 
+## 對齊參考點（Alignment Anchors）
+
+為了讓 6 個 base 在多層疊加時不漂移、所有 base 必須遵守：
+- 角色高度：占畫布高度 70-75%，腳底接近畫布底部 5%（即 950px 線），頭頂接近 220px 線
+- 角色橫向：嚴格置中（畫布中心線 400px ± 10px）
+- 兜帽形狀：張開橢圓 hood 開口面寬 ≈ 200px、開口下緣在畫布 290px 處
+- 兩眼位置：(370, 265) 與 (430, 265) ± 10px
+
 ## 實作備註（給未來實作）
 
 UI 上會用 CSS `position: absolute` 或 SVG `<g>` 把 base + wardrobe 疊在同一個容器。所以 base 要嚴格固定位置（角色中心對齊畫布中心）。建議所有 6 張用同一個 prompt 重 run，只改顏色字眼。
