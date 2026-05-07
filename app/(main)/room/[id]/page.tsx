@@ -1,5 +1,5 @@
 "use client";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { useParams, useRouter } from "next/navigation";
 import { useFolioStore } from "@/lib/store";
 import { canUnlockChat } from "@/lib/unlock";
@@ -7,6 +7,7 @@ import PageContainer from "@/components/ui/PageContainer";
 import Button from "@/components/ui/Button";
 import ProgressCard from "@/components/room/ProgressCard";
 import StickyNoteWall from "@/components/room/StickyNoteWall";
+import Celebration from "@/components/room/Celebration";
 
 export default function Room() {
   const router = useRouter();
@@ -18,6 +19,8 @@ export default function Room() {
   const progress = useFolioStore((s) => s.progress);
   const notes = useFolioStore((s) => s.notes);
   const upsertRoom = useFolioStore((s) => s.upsertRoom);
+
+  const [celebrating, setCelebrating] = useState(false);
 
   if (!room || !meId) return null;
   const otherId = room.userAId === meId ? room.userBId : room.userAId;
@@ -35,6 +38,14 @@ export default function Room() {
       upsertRoom({ ...room, chatUnlockedAt: Date.now() });
     }
   }, [canUnlock, room, upsertRoom]);
+
+  useEffect(() => {
+    const bothDone = myP >= 100 && oP >= 100;
+    if (bothDone && !room.celebratedAt) {
+      setCelebrating(true);
+      upsertRoom({ ...room, celebratedAt: Date.now() });
+    }
+  }, [myP, oP, room, upsertRoom]);
 
   if (!me || !other) return null;
 
@@ -69,6 +80,8 @@ export default function Room() {
           </div>
         </div>
       )}
+
+      {celebrating && <Celebration roomId={room.id} onClose={() => setCelebrating(false)} />}
     </PageContainer>
   );
 }
