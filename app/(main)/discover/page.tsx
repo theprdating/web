@@ -1,4 +1,5 @@
 "use client";
+import { useState, useEffect } from "react";
 import Image from "next/image";
 import Link from "next/link";
 import { Plus } from "lucide-react";
@@ -6,12 +7,26 @@ import { useFolioStore } from "@/lib/store";
 import { canSeeEachOther } from "@/lib/filters";
 import PageContainer from "@/components/ui/PageContainer";
 import PostCard from "@/components/feed/PostCard";
+import Tutorial from "@/components/onboarding/Tutorial";
 
 export default function Discover() {
   const userId = useFolioStore((s) => s.currentUserId);
   const me     = useFolioStore((s) => userId ? s.users[userId] : null);
   const posts  = useFolioStore((s) => s.posts);
   const users  = useFolioStore((s) => s.users);
+  const upsertUser = useFolioStore((s) => s.upsertUser);
+
+  const [showTutorial, setShowTutorial] = useState(false);
+
+  useEffect(() => {
+    if (me && !me.tutorialSeenAt) setShowTutorial(true);
+  }, [me]);
+
+  const dismissTutorial = () => {
+    if (!me) return;
+    upsertUser({ ...me, tutorialSeenAt: Date.now() });
+    setShowTutorial(false);
+  };
 
   if (!me) return null;
 
@@ -48,6 +63,8 @@ export default function Discover() {
       <div className="space-y-3">
         {visible.map((p) => <PostCard key={p.id} postId={p.id} />)}
       </div>
+
+      {showTutorial && <Tutorial onClose={dismissTutorial} />}
     </PageContainer>
   );
 }

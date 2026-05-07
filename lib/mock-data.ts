@@ -2,11 +2,11 @@ import type { User, Book, Post } from "./store";
 import { useFolioStore } from "./store";
 
 export const MOCK_USERS: User[] = [
-  { id: "demo-self", nickname: "你", gender: "未填", age: 0, bookCategories: [], qaAnswers: {}, stance: "純粹書友", stanceChangedAt: 0, nicknameChangedAt: 0, avatar: { base: "fog", bg: "window-moon" } },
-  { id: "alice",  nickname: "Alice",  gender: "female", age: 26, bookCategories: ["小說","哲學"], qaAnswers: { defining: "《小王子》— 永遠保留童心" }, stance: "純粹書友",   stanceChangedAt: 0, nicknameChangedAt: 0, avatar: { base: "sage", scarf: "lavender", holding: "book-open-cream" } },
-  { id: "ben",    nickname: "Ben",    gender: "male",   age: 30, bookCategories: ["科技","商業"], qaAnswers: { titleOfMyLife: "《漫長的告白》" },     stance: "不拘",         stanceChangedAt: 0, nicknameChangedAt: 0, avatar: { base: "amber", hat: "wool-amber", holding: "tea-cup" } },
-  { id: "cleo",   nickname: "Cleo",   gender: "female", age: 23, bookCategories: ["詩集","散文"], qaAnswers: { readingHours: "7-14" },                stance: "純粹找緣分", stanceChangedAt: 0, nicknameChangedAt: 0, avatar: { base: "rose", hat: "flower-crown" } },
-  { id: "dan",    nickname: "Dan",    gender: "male",   age: 28, bookCategories: ["心理","哲學"], qaAnswers: { defining: "《被討厭的勇氣》" },        stance: "不拘",         stanceChangedAt: 0, nicknameChangedAt: 0, avatar: { base: "walnut", glasses: true, holding: "book-closed-sage" } },
+  { id: "demo-self", nickname: "你", gender: "未填", age: 0, bookCategories: [], qaAnswers: {}, stance: "純粹書友", stanceChangedAt: 0, nicknameChangedAt: 0, avatar: { base: "fog", bg: "window-moon" }, tutorialSeenAt: 1 },
+  { id: "alice",  nickname: "Alice",  gender: "female", age: 26, bookCategories: ["小說","哲學"], qaAnswers: { defining: "《小王子》— 永遠保留童心" }, stance: "純粹書友",   stanceChangedAt: 0, nicknameChangedAt: 0, avatar: { base: "sage", scarf: "lavender", holding: "book-open-cream" }, tutorialSeenAt: 1 },
+  { id: "ben",    nickname: "Ben",    gender: "male",   age: 30, bookCategories: ["科技","商業"], qaAnswers: { titleOfMyLife: "《漫長的告白》" },     stance: "不拘",         stanceChangedAt: 0, nicknameChangedAt: 0, avatar: { base: "amber", hat: "wool-amber", holding: "tea-cup" }, tutorialSeenAt: 1 },
+  { id: "cleo",   nickname: "Cleo",   gender: "female", age: 23, bookCategories: ["詩集","散文"], qaAnswers: { readingHours: "7-14" },                stance: "純粹找緣分", stanceChangedAt: 0, nicknameChangedAt: 0, avatar: { base: "rose", hat: "flower-crown" }, tutorialSeenAt: 1 },
+  { id: "dan",    nickname: "Dan",    gender: "male",   age: 28, bookCategories: ["心理","哲學"], qaAnswers: { defining: "《被討厭的勇氣》" },        stance: "不拘",         stanceChangedAt: 0, nicknameChangedAt: 0, avatar: { base: "walnut", glasses: true, holding: "book-closed-sage" }, tutorialSeenAt: 1 },
 ];
 
 export const MOCK_BOOKS: Book[] = [
