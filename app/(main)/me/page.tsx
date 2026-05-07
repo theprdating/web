@@ -6,6 +6,8 @@ import { STANCE_META } from "@/lib/stance-meta";
 import PageContainer from "@/components/ui/PageContainer";
 import Button from "@/components/ui/Button";
 import EditFieldModal from "@/components/me/EditFieldModal";
+import EditCategoriesModal from "@/components/me/EditCategoriesModal";
+import EditQAModal from "@/components/me/EditQAModal";
 import Modal from "@/components/ui/Modal";
 import type { Stance } from "@/lib/store";
 import clsx from "clsx";
@@ -61,7 +63,12 @@ export default function MePage() {
         cooldownMessage="更換後將進入 30 天冷卻"
         onSave={(v) => upsertUser({ ...user, nickname: v.trim() || user.nickname, nicknameChangedAt: Date.now() })} />
 
-      {/* Categories / QA edit modals 留 placeholder，下個 task 補完 */}
+      <EditCategoriesModal open={editing === "categories"} onClose={() => setEditing(null)}
+        initial={user.bookCategories}
+        onSave={(cats) => upsertUser({ ...user, bookCategories: cats })} />
+      <EditQAModal open={editing === "qa"} onClose={() => setEditing(null)}
+        initial={user.qaAnswers}
+        onSave={(qa) => { upsertUser({ ...user, qaAnswers: qa }); setEditing(null); }} />
 
       <Modal open={stanceModal} onClose={() => setStanceModal(false)}>
         <h3 className="font-display text-xl text-walnut">更換心態</h3>
