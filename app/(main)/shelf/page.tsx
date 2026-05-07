@@ -1,4 +1,5 @@
 "use client";
+import Image from "next/image";
 import { useState } from "react";
 import { useFolioStore } from "@/lib/store";
 import PageContainer from "@/components/ui/PageContainer";
@@ -37,6 +38,13 @@ export default function Shelf() {
 
       {myEntries.length === 0 && (
         <div className="text-walnut-soft text-center mt-12">
+          <Image
+            src="/illustrations/empty-shelf.png"
+            alt=""
+            width={250}
+            height={250}
+            className="mx-auto mb-4"
+          />
           還沒有書。<br/>加一本開始讀，或去探索找夥伴。
         </div>
       )}

@@ -1,4 +1,5 @@
 "use client";
+import Image from "next/image";
 import { useParams, useRouter } from "next/navigation";
 import { useFolioStore } from "@/lib/store";
 import PageContainer from "@/components/ui/PageContainer";
@@ -31,6 +32,13 @@ export default function Compilation() {
   return (
     <PageContainer>
       <button onClick={() => router.back()} className="text-sage text-sm">← 回</button>
+      <Image
+        src="/illustrations/compilation-header.png"
+        alt=""
+        width={1731}
+        height={909}
+        className="w-full h-auto mt-4 rounded-xl"
+      />
       <div className="text-center mt-6">
         <div className="font-display text-walnut text-sm">— {me.nickname} 與 —</div>
         <h1 className="font-display text-4xl text-walnut mt-2">《{book.title}》</h1>

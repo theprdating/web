@@ -1,4 +1,5 @@
 "use client";
+import Image from "next/image";
 import Link from "next/link";
 import { Plus } from "lucide-react";
 import { useFolioStore } from "@/lib/store";
@@ -33,6 +34,13 @@ export default function Discover() {
 
       {visible.length === 0 && (
         <div className="text-walnut-soft text-center mt-16">
+          <Image
+            src="/illustrations/empty-discover.png"
+            alt=""
+            width={400}
+            height={300}
+            className="w-3/4 max-w-[300px] mx-auto mb-4"
+          />
           目前沒有符合的貼文。<br/>試試發一篇？
         </div>
       )}
