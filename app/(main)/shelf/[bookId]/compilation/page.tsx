@@ -11,10 +11,10 @@ export default function Compilation() {
   const meId = useFolioStore((s) => s.currentUserId);
   const book = useFolioStore((s) => s.books[bookId]);
   const me   = useFolioStore((s) => meId ? s.users[meId] : null);
-  const myNotes = useFolioStore((s) =>
-    Object.values(s.notes).filter((n) => n.userId === meId && n.bookId === bookId)
-      .sort((a, b) => a.createdAt - b.createdAt)
-  );
+  const allNotes = useFolioStore((s) => s.notes);
+  const myNotes = Object.values(allNotes)
+    .filter((n) => n.userId === meId && n.bookId === bookId)
+    .sort((a, b) => a.createdAt - b.createdAt);
 
   if (!book || !me) return null;
 

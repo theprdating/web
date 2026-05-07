@@ -3,11 +3,10 @@ import { useFolioStore } from "@/lib/store";
 import StickyNote from "@/components/notes/StickyNote";
 
 export default function StickyNoteWall({ bookId, userIds }: { bookId: string; userIds: string[] }) {
-  const notes = useFolioStore((s) =>
-    Object.values(s.notes)
-      .filter((n) => n.bookId === bookId && userIds.includes(n.userId))
-      .sort((a, b) => b.createdAt - a.createdAt)
-  );
+  const allNotes = useFolioStore((s) => s.notes);
+  const notes = Object.values(allNotes)
+    .filter((n) => n.bookId === bookId && userIds.includes(n.userId))
+    .sort((a, b) => b.createdAt - a.createdAt);
   if (notes.length === 0) {
     return <div className="text-walnut-soft text-sm text-center py-6">還沒有便利貼。</div>;
   }

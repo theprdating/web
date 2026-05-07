@@ -4,9 +4,10 @@ import { isSameDay, formatLocalTime, formatDayLabel } from "@/lib/format-time";
 import clsx from "clsx";
 
 export default function ChatLog({ roomId, meId }: { roomId: string; meId: string }) {
-  const messages = useFolioStore((s) =>
-    Object.values(s.messages).filter((m) => m.roomId === roomId).sort((a, b) => a.createdAt - b.createdAt)
-  );
+  const allMessages = useFolioStore((s) => s.messages);
+  const messages = Object.values(allMessages)
+    .filter((m) => m.roomId === roomId)
+    .sort((a, b) => a.createdAt - b.createdAt);
   if (messages.length === 0) {
     return <div className="text-walnut-soft text-center py-8">還沒對話。打第一句吧。</div>;
   }

@@ -10,10 +10,11 @@ import BookRow from "@/components/shelf/BookRow";
 
 export default function Shelf() {
   const meId = useFolioStore((s) => s.currentUserId);
-  const myEntries = useFolioStore((s) =>
-    Object.values(s.progress).filter((p) => p.userId === meId).sort((a, b) => b.updatedAt - a.updatedAt)
-  );
+  const progress = useFolioStore((s) => s.progress);
   const upsertProgress = useFolioStore((s) => s.upsertProgress);
+  const myEntries = Object.values(progress)
+    .filter((p) => p.userId === meId)
+    .sort((a, b) => b.updatedAt - a.updatedAt);
 
   const [open, setOpen] = useState(false);
   const [bookId, setBookId] = useState("");

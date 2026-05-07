@@ -9,8 +9,9 @@ export default function Applicants() {
   const router = useRouter();
   const { id } = useParams<{ id: string }>();
   const post = useFolioStore((s) => s.posts[id]);
-  const apps = useFolioStore((s) => Object.values(s.applications).filter((a) => a.postId === id));
+  const allApps = useFolioStore((s) => s.applications);
   const users = useFolioStore((s) => s.users);
+  const apps = Object.values(allApps).filter((a) => a.postId === id);
   const upsertApplication = useFolioStore((s) => s.upsertApplication);
   const upsertPost = useFolioStore((s) => s.upsertPost);
   const upsertRoom = useFolioStore((s) => s.upsertRoom);

@@ -15,12 +15,12 @@ export default function BookDetail() {
   const meId = useFolioStore((s) => s.currentUserId);
   const book = useFolioStore((s) => s.books[bookId]);
   const myProgress = useFolioStore((s) => meId ? s.progress[`${meId}:${bookId}`] : undefined);
-  const myNotes = useFolioStore((s) =>
-    Object.values(s.notes).filter((n) => n.userId === meId && n.bookId === bookId)
-      .sort((a, b) => b.createdAt - a.createdAt)
-  );
+  const allNotes = useFolioStore((s) => s.notes);
   const upsertProgress = useFolioStore((s) => s.upsertProgress);
   const upsertNote = useFolioStore((s) => s.upsertNote);
+  const myNotes = Object.values(allNotes)
+    .filter((n) => n.userId === meId && n.bookId === bookId)
+    .sort((a, b) => b.createdAt - a.createdAt);
 
   const [percent, setPercent] = useState(myProgress?.percent ?? 0);
   const [free, setFree] = useState("");
