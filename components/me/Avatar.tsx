@@ -1,31 +1,96 @@
 import Image from "next/image";
-import type { Avatar as AvatarType } from "@/lib/store";
+import type { Avatar as AvatarType, AvatarExpression, AvatarHeight, AvatarWeight } from "@/lib/store";
 
 const DEFAULT: AvatarType = { base: "sage" };
 
-export default function Avatar({ avatar = DEFAULT, size = 240 }: { avatar?: AvatarType; size?: number }) {
-  const height = Math.round(size * 1.25); // 4:5 aspect (800:1000)
+function getTransform(height: AvatarHeight, weight: AvatarWeight): string {
+  const scaleY = height === "short" ? 0.9 : height === "tall" ? 1.08 : 1.0;
+  const scaleX = weight === "slim" ? 0.92 : weight === "chubby" ? 1.1 : 1.0;
+  if (scaleX === 1.0 && scaleY === 1.0) return "none";
+  return `scaleX(${scaleX}) scaleY(${scaleY})`;
+}
+
+function ExpressionOverlay({ expression }: { expression: AvatarExpression }) {
+  if (expression === "default") return null;
+
+  // Eye-mask ovals to blot out original PNG dot eyes
+  const maskLeft = <ellipse cx="370" cy="265" rx="22" ry="20" fill="#F4EAD8" />;
+  const maskRight = <ellipse cx="430" cy="265" rx="22" ry="20" fill="#F4EAD8" />;
+
+  let leftEye: React.ReactNode;
+  let rightEye: React.ReactNode;
+
+  if (expression === "happy") {
+    // Upward arc curves (smiling eyes)
+    leftEye = <path d="M352,270 Q370,252 388,270" stroke="#3D2F1F" strokeWidth="3.5" fill="none" strokeLinecap="round" />;
+    rightEye = <path d="M412,270 Q430,252 448,270" stroke="#3D2F1F" strokeWidth="3.5" fill="none" strokeLinecap="round" />;
+  } else if (expression === "sleepy") {
+    // Short horizontal lines
+    leftEye = <line x1="356" y1="265" x2="384" y2="265" stroke="#3D2F1F" strokeWidth="3.5" strokeLinecap="round" />;
+    rightEye = <line x1="416" y1="265" x2="444" y2="265" stroke="#3D2F1F" strokeWidth="3.5" strokeLinecap="round" />;
+  } else if (expression === "surprise") {
+    // Larger circles
+    leftEye = <circle cx="370" cy="265" r="26" fill="#3D2F1F" />;
+    rightEye = <circle cx="430" cy="265" r="26" fill="#3D2F1F" />;
+  } else if (expression === "wink") {
+    // Left eye = circle, right eye = arc (wink)
+    leftEye = <circle cx="370" cy="265" r="18" fill="#3D2F1F" />;
+    rightEye = <path d="M412,270 Q430,252 448,270" stroke="#3D2F1F" strokeWidth="3.5" fill="none" strokeLinecap="round" />;
+  } else {
+    return null;
+  }
+
   return (
-    <div className="relative mx-auto" style={{ width: size, height }}>
+    <svg
+      viewBox="0 0 800 1000"
+      className="absolute inset-0 w-full h-full"
+      style={{ zIndex: 2 }}
+    >
+      {maskLeft}
+      {maskRight}
+      {leftEye}
+      {rightEye}
+    </svg>
+  );
+}
+
+export default function Avatar({ avatar = DEFAULT, size = 240 }: { avatar?: AvatarType; size?: number }) {
+  const canvasHeight = Math.round(size * 1.25); // 4:5 aspect (800:1000)
+
+  const height: AvatarHeight = avatar.height ?? "regular";
+  const weight: AvatarWeight = avatar.weight ?? "regular";
+  const expression: AvatarExpression = avatar.expression ?? "default";
+
+  const transform = getTransform(height, weight);
+
+  return (
+    <div className="relative mx-auto" style={{ width: size, height: canvasHeight }}>
       {avatar.bg && (
-        <Image src={`/illustrations/avatar/wardrobe/bg-${avatar.bg}.png`} alt="" fill className="object-contain" style={{ zIndex: 0 }} />
+        <Image
+          src={`/illustrations/avatar/wardrobe/bg-${avatar.bg}.png`}
+          alt=""
+          fill
+          className="object-contain"
+          style={{ zIndex: 0 }}
+        />
       )}
-      <Image src={`/illustrations/avatar/base-${avatar.base}.png`} alt="" fill className="object-contain" style={{ zIndex: 1 }} />
-      {avatar.scarf && (
-        <Image src={`/illustrations/avatar/wardrobe/scarf-${avatar.scarf}.png`} alt="" fill className="object-contain" style={{ zIndex: 2 }} />
-      )}
-      {avatar.holding && (
-        <Image src={`/illustrations/avatar/wardrobe/${avatar.holding}.png`} alt="" fill className="object-contain" style={{ zIndex: 3 }} />
-      )}
-      {avatar.bookmark && (
-        <Image src="/illustrations/avatar/wardrobe/bookmark-tab.png" alt="" fill className="object-contain" style={{ zIndex: 4 }} />
-      )}
-      {avatar.hat && (
-        <Image src={`/illustrations/avatar/wardrobe/hat-${avatar.hat}.png`} alt="" fill className="object-contain" style={{ zIndex: 5 }} />
-      )}
-      {avatar.glasses && (
-        <Image src="/illustrations/avatar/wardrobe/glasses-round.png" alt="" fill className="object-contain" style={{ zIndex: 6 }} />
-      )}
+      {/* Base wrapped in transform layer for height/weight */}
+      <div
+        className="absolute inset-0"
+        style={{
+          zIndex: 1,
+          transform,
+          transformOrigin: "bottom center",
+        }}
+      >
+        <Image
+          src={`/illustrations/avatar/base-${avatar.base}.png`}
+          alt=""
+          fill
+          className="object-contain"
+        />
+      </div>
+      <ExpressionOverlay expression={expression} />
     </div>
   );
 }

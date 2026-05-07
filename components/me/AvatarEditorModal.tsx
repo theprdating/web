@@ -3,20 +3,20 @@ import { useState } from "react";
 import Modal from "@/components/ui/Modal";
 import Button from "@/components/ui/Button";
 import Avatar from "./Avatar";
-import type { Avatar as AvatarType } from "@/lib/store";
+import type { Avatar as AvatarType, AvatarExpression, AvatarHeight, AvatarWeight } from "@/lib/store";
 import {
-  AVATAR_BASES, AVATAR_HATS, AVATAR_HOLDINGS, AVATAR_SCARVES, AVATAR_BGS,
+  AVATAR_BASES, AVATAR_BGS,
+  AVATAR_EXPRESSIONS, AVATAR_HEIGHTS, AVATAR_WEIGHTS,
 } from "@/lib/avatar-data";
 import clsx from "clsx";
 
-type Tab = "base" | "bg" | "hat" | "holding" | "scarf" | "extras";
+type Tab = "base" | "bg" | "expression" | "height" | "weight";
 const TABS: { id: Tab; label: string }[] = [
-  { id: "base", label: "顏色" },
-  { id: "bg", label: "背景" },
-  { id: "hat", label: "帽子" },
-  { id: "holding", label: "持物" },
-  { id: "scarf", label: "圍巾" },
-  { id: "extras", label: "配件" },
+  { id: "base",       label: "顏色" },
+  { id: "bg",         label: "背景" },
+  { id: "expression", label: "表情" },
+  { id: "height",     label: "身高" },
+  { id: "weight",     label: "胖瘦" },
 ];
 
 export default function AvatarEditorModal({
@@ -62,25 +62,26 @@ export default function AvatarEditorModal({
           <OptionGrid options={AVATAR_BGS} value={draft.bg}
             onChange={(v) => setDraft({ ...draft, bg: v })} clearable />
         )}
-        {tab === "hat" && (
-          <OptionGrid options={AVATAR_HATS} value={draft.hat}
-            onChange={(v) => setDraft({ ...draft, hat: v })} clearable />
+        {tab === "expression" && (
+          <RequiredGrid
+            options={AVATAR_EXPRESSIONS}
+            value={draft.expression ?? "default"}
+            onChange={(v) => setDraft({ ...draft, expression: v })}
+          />
         )}
-        {tab === "holding" && (
-          <OptionGrid options={AVATAR_HOLDINGS} value={draft.holding}
-            onChange={(v) => setDraft({ ...draft, holding: v })} clearable />
+        {tab === "height" && (
+          <RequiredGrid
+            options={AVATAR_HEIGHTS}
+            value={draft.height ?? "regular"}
+            onChange={(v) => setDraft({ ...draft, height: v })}
+          />
         )}
-        {tab === "scarf" && (
-          <OptionGrid options={AVATAR_SCARVES} value={draft.scarf}
-            onChange={(v) => setDraft({ ...draft, scarf: v })} clearable />
-        )}
-        {tab === "extras" && (
-          <div className="space-y-2">
-            <Toggle label="圓框眼鏡" on={!!draft.glasses}
-              onChange={(v) => setDraft({ ...draft, glasses: v || undefined })} />
-            <Toggle label="書籤" on={!!draft.bookmark}
-              onChange={(v) => setDraft({ ...draft, bookmark: v || undefined })} />
-          </div>
+        {tab === "weight" && (
+          <RequiredGrid
+            options={AVATAR_WEIGHTS}
+            value={draft.weight ?? "regular"}
+            onChange={(v) => setDraft({ ...draft, weight: v })}
+          />
         )}
       </div>
 
@@ -115,13 +116,18 @@ function OptionGrid<T extends string>({ options, value, onChange, clearable }: {
   );
 }
 
-function Toggle({ label, on, onChange }: { label: string; on: boolean; onChange: (v: boolean) => void }) {
+function RequiredGrid<T extends string>({ options, value, onChange }: {
+  options: { id: T; label: string }[]; value: T; onChange: (v: T) => void;
+}) {
   return (
-    <button onClick={() => onChange(!on)}
-      className={clsx("w-full p-3 rounded-xl border text-sm flex justify-between items-center",
-        on ? "border-sage bg-sage/10" : "border-tag/30")}>
-      <span>{label}</span>
-      <span className="text-walnut-soft text-xs">{on ? "開啟" : "關閉"}</span>
-    </button>
+    <div className="grid grid-cols-3 gap-2">
+      {options.map((o) => (
+        <button key={o.id} onClick={() => onChange(o.id)}
+          className={clsx("p-3 rounded-xl border text-sm",
+            value === o.id ? "border-sage bg-sage/10" : "border-tag/30")}>
+          {o.label}
+        </button>
+      ))}
+    </div>
   );
 }

@@ -1,4 +1,4 @@
-import type { AvatarBase, AvatarHat, AvatarHolding, AvatarScarf, AvatarBg } from "./store";
+import type { AvatarBase, AvatarHat, AvatarHolding, AvatarScarf, AvatarBg, AvatarExpression, AvatarHeight, AvatarWeight } from "./store";
 
 export const AVATAR_BASES: { id: AvatarBase; label: string }[] = [
   { id: "sage", label: "鼠尾草" },
@@ -31,4 +31,24 @@ export const AVATAR_BGS: { id: AvatarBg; label: string }[] = [
   { id: "bookshelf-mini", label: "迷你書櫃" },
   { id: "window-moon", label: "月夜窗" },
   { id: "window-sun", label: "晴日窗" },
+];
+
+export const AVATAR_EXPRESSIONS: { id: AvatarExpression; label: string }[] = [
+  { id: "default", label: "原樣" },
+  { id: "happy", label: "笑眼" },
+  { id: "sleepy", label: "睡眼" },
+  { id: "surprise", label: "驚訝" },
+  { id: "wink", label: "眨眼" },
+];
+
+export const AVATAR_HEIGHTS: { id: AvatarHeight; label: string }[] = [
+  { id: "short", label: "矮" },
+  { id: "regular", label: "中等" },
+  { id: "tall", label: "高" },
+];
+
+export const AVATAR_WEIGHTS: { id: AvatarWeight; label: string }[] = [
+  { id: "slim", label: "纖細" },
+  { id: "regular", label: "中等" },
+  { id: "chubby", label: "圓潤" },
 ];

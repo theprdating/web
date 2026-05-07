@@ -9,15 +9,22 @@ export type AvatarHat = "beret-sage" | "flower-crown" | "wool-amber";
 export type AvatarHolding = "book-open-cream" | "book-closed-sage" | "tea-cup" | "pen-quill";
 export type AvatarScarf = "lavender" | "stripes";
 export type AvatarBg = "bookshelf-mini" | "window-moon" | "window-sun";
+export type AvatarExpression = "default" | "happy" | "sleepy" | "surprise" | "wink";
+export type AvatarHeight = "short" | "regular" | "tall";
+export type AvatarWeight = "slim" | "regular" | "chubby";
 
 export type Avatar = {
   base: AvatarBase;
+  bg?: AvatarBg;
+  expression?: AvatarExpression;
+  height?: AvatarHeight;
+  weight?: AvatarWeight;
+  // existing fields kept but not editable in UI for now:
   hat?: AvatarHat;
   scarf?: AvatarScarf;
   holding?: AvatarHolding;
   glasses?: boolean;
   bookmark?: boolean;
-  bg?: AvatarBg;
 };
 
 export type User = {
@@ -31,6 +38,7 @@ export type User = {
   stanceChangedAt: number;
   nicknameChangedAt: number;
   avatar?: Avatar;
+  tutorialSeenAt?: number; // epoch ms when user closed tutorial
 };
 
 export type Book = { id: string; title: string };
