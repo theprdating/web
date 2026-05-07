@@ -4,6 +4,22 @@ import { saveState, loadState } from "./persistence";
 export type Stance = "純粹書友" | "純粹找緣分" | "不拘";
 export type ReadingMins = "<1" | "1-3" | "3-7" | "7-14" | "14+";
 
+export type AvatarBase = "sage" | "lavender" | "amber" | "rose" | "fog" | "walnut";
+export type AvatarHat = "beret-sage" | "flower-crown" | "wool-amber";
+export type AvatarHolding = "book-open-cream" | "book-closed-sage" | "tea-cup" | "pen-quill";
+export type AvatarScarf = "lavender" | "stripes";
+export type AvatarBg = "bookshelf-mini" | "window-moon" | "window-sun";
+
+export type Avatar = {
+  base: AvatarBase;
+  hat?: AvatarHat;
+  scarf?: AvatarScarf;
+  holding?: AvatarHolding;
+  glasses?: boolean;
+  bookmark?: boolean;
+  bg?: AvatarBg;
+};
+
 export type User = {
   id: string;
   nickname: string;
@@ -14,6 +30,7 @@ export type User = {
   stance: Stance;
   stanceChangedAt: number;
   nicknameChangedAt: number;
+  avatar?: Avatar;
 };
 
 export type Book = { id: string; title: string };

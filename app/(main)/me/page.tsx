@@ -8,6 +8,8 @@ import Button from "@/components/ui/Button";
 import EditFieldModal from "@/components/me/EditFieldModal";
 import EditCategoriesModal from "@/components/me/EditCategoriesModal";
 import EditQAModal from "@/components/me/EditQAModal";
+import Avatar from "@/components/me/Avatar";
+import AvatarEditorModal from "@/components/me/AvatarEditorModal";
 import Modal from "@/components/ui/Modal";
 import type { Stance } from "@/lib/store";
 import clsx from "clsx";
@@ -19,6 +21,7 @@ export default function MePage() {
 
   const [editing, setEditing] = useState<null | "nickname" | "categories" | "qa">(null);
   const [stanceModal, setStanceModal] = useState(false);
+  const [editingAvatar, setEditingAvatar] = useState(false);
 
   if (!user) return null;
 
@@ -34,6 +37,11 @@ export default function MePage() {
   return (
     <PageContainer>
       <h1 className="font-display text-3xl text-walnut mb-6">我</h1>
+
+      <div className="flex flex-col items-center mb-6 mt-2">
+        <Avatar avatar={user.avatar} size={200} />
+        <button onClick={() => setEditingAvatar(true)} className="text-sage text-sm mt-3">編輯角色</button>
+      </div>
 
       <Section label="暱稱" value={user.nickname}
         rightAction={<button onClick={() => setEditing("nickname")} disabled={nickCooldownLeft > 0}
@@ -69,6 +77,13 @@ export default function MePage() {
       <EditQAModal open={editing === "qa"} onClose={() => setEditing(null)}
         initial={user.qaAnswers}
         onSave={(qa) => { upsertUser({ ...user, qaAnswers: qa }); setEditing(null); }} />
+
+      <AvatarEditorModal
+        open={editingAvatar}
+        onClose={() => setEditingAvatar(false)}
+        initial={user.avatar ?? { base: "sage" }}
+        onSave={(av) => upsertUser({ ...user, avatar: av })}
+      />
 
       <Modal open={stanceModal} onClose={() => setStanceModal(false)}>
         <h3 className="font-display text-xl text-walnut">更換心態</h3>
