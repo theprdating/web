@@ -47,7 +47,7 @@ export default function Discover() {
     <PageContainer>
       <div
         aria-hidden
-        className="w-full aspect-[2.5/1] -mx-6 -mt-8 mb-2 bg-no-repeat bg-cover bg-center"
+        className="w-full aspect-[3/1] mb-4 bg-no-repeat bg-cover bg-center rounded-2xl shadow-sm"
         style={{ backgroundImage: "url(/illustrations/decorations/hero-discover.png)" }}
       />
       <div className="flex justify-between items-center mb-6">
