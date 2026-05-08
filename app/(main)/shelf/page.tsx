@@ -8,14 +8,22 @@ import Modal from "@/components/ui/Modal";
 import BookPicker from "@/components/shared/BookPicker";
 import ProgressSlider from "@/components/shared/ProgressSlider";
 import BookRow from "@/components/shelf/BookRow";
+import StatCard from "@/components/shared/StatCard";
+import SectionHeader from "@/components/shared/SectionHeader";
 
 export default function Shelf() {
   const meId = useFolioStore((s) => s.currentUserId);
   const progress = useFolioStore((s) => s.progress);
+  const notes = useFolioStore((s) => s.notes);
   const upsertProgress = useFolioStore((s) => s.upsertProgress);
+
   const myEntries = Object.values(progress)
     .filter((p) => p.userId === meId)
     .sort((a, b) => b.updatedAt - a.updatedAt);
+
+  const myNoteCount = Object.values(notes).filter((n) => n.userId === meId).length;
+  const reading = myEntries.filter((e) => e.percent < 100);
+  const done = myEntries.filter((e) => e.percent >= 100);
 
   const [open, setOpen] = useState(false);
   const [bookId, setBookId] = useState("");
@@ -36,22 +44,31 @@ export default function Shelf() {
         <button onClick={() => setOpen(true)} className="text-sage text-sm">＋ 加書</button>
       </div>
 
+      <StatCard stats={[
+        { number: reading.length, label: "在讀" },
+        { number: done.length, label: "已完成" },
+        { number: myNoteCount, label: "便利貼" },
+      ]} />
+
       {myEntries.length === 0 && (
         <div className="text-walnut-soft text-center mt-12">
-          <Image
-            src="/illustrations/empty-shelf.png"
-            alt=""
-            width={250}
-            height={250}
-            className="mx-auto mb-4"
-          />
+          <Image src="/illustrations/empty-shelf.png" alt="" width={250} height={250} className="mx-auto mb-4" />
           還沒有書。<br/>加一本開始讀，或去探索找夥伴。
         </div>
       )}
 
-      <div className="space-y-2">
-        {myEntries.map((e) => <BookRow key={e.bookId} bookId={e.bookId} percent={e.percent} />)}
-      </div>
+      {reading.length > 0 && (
+        <>
+          <SectionHeader label="在讀" count={reading.length} />
+          <div className="space-y-2">{reading.map((e) => <BookRow key={e.bookId} bookId={e.bookId} percent={e.percent} />)}</div>
+        </>
+      )}
+      {done.length > 0 && (
+        <>
+          <SectionHeader label="已完成" count={done.length} />
+          <div className="space-y-2">{done.map((e) => <BookRow key={e.bookId} bookId={e.bookId} percent={e.percent} />)}</div>
+        </>
+      )}
 
       <Modal open={open} onClose={() => setOpen(false)}>
         <h3 className="font-display text-xl text-walnut">加一本書到書櫃</h3>
