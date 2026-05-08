@@ -11,6 +11,7 @@ import EditQAModal from "@/components/me/EditQAModal";
 import Avatar from "@/components/me/Avatar";
 import AvatarEditorModal from "@/components/me/AvatarEditorModal";
 import Modal from "@/components/ui/Modal";
+import StatCard from "@/components/shared/StatCard";
 import type { Stance } from "@/lib/store";
 import clsx from "clsx";
 
@@ -18,15 +19,23 @@ export default function MePage() {
   const userId = useFolioStore((s) => s.currentUserId);
   const user = useFolioStore((s) => userId ? s.users[userId] : null);
   const upsertUser = useFolioStore((s) => s.upsertUser);
+  const progress = useFolioStore((s) => s.progress);
+  const rooms = useFolioStore((s) => s.rooms);
+  const notes = useFolioStore((s) => s.notes);
 
   const [editing, setEditing] = useState<null | "nickname" | "categories" | "qa">(null);
   const [stanceModal, setStanceModal] = useState(false);
   const [editingAvatar, setEditingAvatar] = useState(false);
 
-  if (!user) return null;
+  if (!user || !userId) return null;
 
   const nickCooldownLeft = cooldownRemainingMs(user.nicknameChangedAt, 30);
   const stanceCooldownLeft = cooldownRemainingMs(user.stanceChangedAt, 7);
+
+  const myProgresses = Object.values(progress).filter((p) => p.userId === userId);
+  const finishedCount = myProgresses.filter((p) => p.percent >= 100).length;
+  const myRoomsCount = Object.values(rooms).filter((r) => r.userAId === userId || r.userBId === userId).length;
+  const myNotesCount = Object.values(notes).filter((n) => n.userId === userId).length;
 
   const setStance = (next: Stance) => {
     if (next === user.stance) { setStanceModal(false); return; }
@@ -38,10 +47,20 @@ export default function MePage() {
     <PageContainer>
       <h1 className="font-display text-3xl text-walnut mb-6">我</h1>
 
-      <div className="flex flex-col items-center mb-6 mt-2">
-        <Avatar avatar={user.avatar} size={200} />
-        <button onClick={() => setEditingAvatar(true)} className="text-sage text-sm mt-3">編輯角色</button>
+      <div className="relative flex flex-col items-center mb-6 mt-2">
+        {/* Soft sage halo behind avatar */}
+        <div className="absolute top-8 left-1/2 -translate-x-1/2 w-48 h-48 bg-sage/10 rounded-full blur-2xl pointer-events-none" />
+        <div className="relative">
+          <Avatar avatar={user.avatar} size={200} />
+        </div>
+        <button onClick={() => setEditingAvatar(true)} className="text-sage text-sm mt-3 relative">編輯角色</button>
       </div>
+
+      <StatCard stats={[
+        { number: myRoomsCount, label: "共讀" },
+        { number: finishedCount, label: "讀完" },
+        { number: myNotesCount, label: "便利貼" },
+      ]} />
 
       <Section label="暱稱" value={user.nickname}
         rightAction={<button onClick={() => setEditing("nickname")} disabled={nickCooldownLeft > 0}
