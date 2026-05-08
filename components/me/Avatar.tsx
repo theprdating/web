@@ -14,28 +14,29 @@ function ExpressionOverlay({ expression }: { expression: AvatarExpression }) {
   if (expression === "default") return null;
 
   // Eye-mask ovals to blot out original PNG dot eyes
-  const maskLeft = <ellipse cx="370" cy="265" rx="22" ry="20" fill="#F4EAD8" />;
-  const maskRight = <ellipse cx="430" cy="265" rx="22" ry="20" fill="#F4EAD8" />;
+  // Larger ovals ensure coverage across slight per-base position variation
+  const maskLeft = <ellipse cx="370" cy="245" rx="32" ry="28" fill="#F8E8D0" />;
+  const maskRight = <ellipse cx="430" cy="245" rx="32" ry="28" fill="#F8E8D0" />;
 
   let leftEye: React.ReactNode;
   let rightEye: React.ReactNode;
 
   if (expression === "happy") {
     // Upward arc curves (smiling eyes)
-    leftEye = <path d="M352,270 Q370,252 388,270" stroke="#3D2F1F" strokeWidth="3.5" fill="none" strokeLinecap="round" />;
-    rightEye = <path d="M412,270 Q430,252 448,270" stroke="#3D2F1F" strokeWidth="3.5" fill="none" strokeLinecap="round" />;
+    leftEye = <path d="M352,250 Q370,232 388,250" stroke="#3D2F1F" strokeWidth="3.5" fill="none" strokeLinecap="round" />;
+    rightEye = <path d="M412,250 Q430,232 448,250" stroke="#3D2F1F" strokeWidth="3.5" fill="none" strokeLinecap="round" />;
   } else if (expression === "sleepy") {
     // Short horizontal lines
-    leftEye = <line x1="356" y1="265" x2="384" y2="265" stroke="#3D2F1F" strokeWidth="3.5" strokeLinecap="round" />;
-    rightEye = <line x1="416" y1="265" x2="444" y2="265" stroke="#3D2F1F" strokeWidth="3.5" strokeLinecap="round" />;
+    leftEye = <line x1="356" y1="245" x2="384" y2="245" stroke="#3D2F1F" strokeWidth="3.5" strokeLinecap="round" />;
+    rightEye = <line x1="416" y1="245" x2="444" y2="245" stroke="#3D2F1F" strokeWidth="3.5" strokeLinecap="round" />;
   } else if (expression === "surprise") {
     // Larger circles
-    leftEye = <circle cx="370" cy="265" r="26" fill="#3D2F1F" />;
-    rightEye = <circle cx="430" cy="265" r="26" fill="#3D2F1F" />;
+    leftEye = <circle cx="370" cy="245" r="26" fill="#3D2F1F" />;
+    rightEye = <circle cx="430" cy="245" r="26" fill="#3D2F1F" />;
   } else if (expression === "wink") {
     // Left eye = circle, right eye = arc (wink)
-    leftEye = <circle cx="370" cy="265" r="18" fill="#3D2F1F" />;
-    rightEye = <path d="M412,270 Q430,252 448,270" stroke="#3D2F1F" strokeWidth="3.5" fill="none" strokeLinecap="round" />;
+    leftEye = <circle cx="370" cy="245" r="18" fill="#3D2F1F" />;
+    rightEye = <path d="M412,250 Q430,232 448,250" stroke="#3D2F1F" strokeWidth="3.5" fill="none" strokeLinecap="round" />;
   } else {
     return null;
   }
