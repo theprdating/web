@@ -19,7 +19,7 @@ export default function StancePage() {
   const next = () => {
     if (!user) return;
     upsertUser({ ...user, stance, stanceChangedAt: Date.now() });
-    router.push("/register/confirm");
+    router.push("/register/avatar");
   };
 
   return (

@@ -5,6 +5,7 @@ import { useFolioStore } from "@/lib/store";
 import RegisterStepper from "@/components/shared/RegisterStepper";
 import Button from "@/components/ui/Button";
 import Modal from "@/components/ui/Modal";
+import Avatar from "@/components/me/Avatar";
 
 export default function ConfirmPage() {
   const router = useRouter();
@@ -21,8 +22,12 @@ export default function ConfirmPage() {
 
   return (
     <>
-      <RegisterStepper current={3} />
+      <RegisterStepper current={4} />
       <h1 className="font-display text-3xl text-walnut mb-6">確認你的資料</h1>
+
+      <div className="flex flex-col items-center mb-6">
+        <Avatar avatar={user.avatar ?? { base: "sage" }} size={120} />
+      </div>
 
       <dl className="space-y-3 text-walnut">
         <Row k="暱稱"   v={user.nickname} />
