@@ -23,11 +23,13 @@ html, body {
 
 body {
   background-image:
-    radial-gradient(circle at 25% 30%, rgba(155,143,181,0.04), transparent 60%),
-    radial-gradient(circle at 75% 70%, rgba(107,128,100,0.04), transparent 60%),
-    url("data:image/svg+xml;utf8,<svg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'><filter id='n'><feTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='2' seed='3'/><feColorMatrix values='0 0 0 0 0.24  0 0 0 0 0.18  0 0 0 0 0.12  0 0 0 0.05 0'/></filter><rect width='200' height='200' filter='url(%23n)'/></svg>");
+    radial-gradient(circle at 18% 22%, rgba(155,143,181,0.18), transparent 55%),
+    radial-gradient(circle at 82% 18%, rgba(217,184,132,0.16), transparent 55%),
+    radial-gradient(circle at 12% 78%, rgba(107,128,100,0.16), transparent 60%),
+    radial-gradient(circle at 88% 82%, rgba(166,181,194,0.15), transparent 60%),
+    url("data:image/svg+xml;utf8,<svg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'><filter id='n'><feTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='2' seed='3'/><feColorMatrix values='0 0 0 0 0.24  0 0 0 0 0.18  0 0 0 0 0.12  0 0 0 0.18 0'/></filter><rect width='200' height='200' filter='url(%23n)'/></svg>");
   background-attachment: fixed;
-  background-size: auto, auto, 200px;
+  background-size: auto, auto, auto, auto, 220px;
 }
 
 .font-display { font-family: var(--font-cormorant), var(--font-noto-serif-tc), serif; }
