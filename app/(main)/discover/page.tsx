@@ -45,6 +45,11 @@ export default function Discover() {
 
   return (
     <PageContainer>
+      <div
+        aria-hidden
+        className="w-full aspect-[2.5/1] -mx-6 -mt-8 mb-2 bg-no-repeat bg-cover bg-center"
+        style={{ backgroundImage: "url(/illustrations/decorations/hero-discover.png)" }}
+      />
       <div className="flex justify-between items-center mb-6">
         <h1 className="font-display text-3xl text-walnut">探索</h1>
         <Link href="/discover/new" className="flex items-center gap-1 text-sage">
