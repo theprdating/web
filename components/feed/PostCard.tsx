@@ -2,6 +2,7 @@
 import Link from "next/link";
 import { useFolioStore } from "@/lib/store";
 import StanceBadge from "./StanceBadge";
+import AvatarTiny from "@/components/me/AvatarTiny";
 
 export default function PostCard({ postId }: { postId: string }) {
   const post  = useFolioStore((s) => s.posts[postId]);
@@ -13,9 +14,12 @@ export default function PostCard({ postId }: { postId: string }) {
     <Link href={`/discover/post/${post.id}`}
       className="block p-5 rounded-2xl bg-cream border border-tag/30 hover:border-sage transition-colors">
       <div className="flex justify-between items-start gap-3">
-        <div className="flex-1">
-          <div className="font-display text-xl text-walnut">{book.title}</div>
-          <div className="text-walnut-soft text-sm mt-1">{owner.nickname} ・ 目前 {post.progressAtPost}%</div>
+        <div className="flex items-start gap-3 flex-1 min-w-0">
+          <AvatarTiny avatar={owner.avatar} size={44} />
+          <div className="flex-1 min-w-0">
+            <div className="font-display text-xl text-walnut truncate">{book.title}</div>
+            <div className="text-walnut-soft text-sm mt-1">{owner.nickname} ・ 目前 {post.progressAtPost}%</div>
+          </div>
         </div>
         <StanceBadge stance={owner.stance} />
       </div>

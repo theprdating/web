@@ -8,6 +8,7 @@ import { canSeeEachOther } from "@/lib/filters";
 import PageContainer from "@/components/ui/PageContainer";
 import PostCard from "@/components/feed/PostCard";
 import Tutorial from "@/components/onboarding/Tutorial";
+import StatCard from "@/components/shared/StatCard";
 
 export default function Discover() {
   const userId = useFolioStore((s) => s.currentUserId);
@@ -38,6 +39,10 @@ export default function Discover() {
     })
     .sort((a, b) => b.createdAt - a.createdAt);
 
+  const totalOpen = Object.values(posts).filter((p) => p.status === "open" && p.ownerId !== me.id).length;
+  const matchYou = visible.length;
+  const openMinded = Object.values(users).filter((u) => u.id !== me.id && u.stance === "不拘").length;
+
   return (
     <PageContainer>
       <div className="flex justify-between items-center mb-6">
@@ -46,6 +51,12 @@ export default function Discover() {
           <Plus size={18} /> 發帖
         </Link>
       </div>
+
+      <StatCard stats={[
+        { number: totalOpen, label: "公開貼文" },
+        { number: matchYou, label: "適合你" },
+        { number: openMinded, label: "不拘的人" },
+      ]} />
 
       {visible.length === 0 && (
         <div className="text-walnut-soft text-center mt-16">
