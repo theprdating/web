@@ -52,9 +52,12 @@ export default function Discover() {
       />
       <div className="flex justify-between items-center mb-6">
         <h1 className="font-display text-3xl text-walnut">探索</h1>
-        <Link href="/discover/new" className="flex items-center gap-1 text-sage">
-          <Plus size={18} /> 發帖
-        </Link>
+        <div className="flex items-center gap-4">
+          <Link href="/discover/mine" className="text-walnut-soft text-sm hover:text-sage">我的貼文</Link>
+          <Link href="/discover/new" className="flex items-center gap-1 text-sage">
+            <Plus size={18} /> 發帖
+          </Link>
+        </div>
       </div>
 
       <StatCard stats={[
