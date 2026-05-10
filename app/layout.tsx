@@ -3,6 +3,7 @@ import { Cormorant_Garamond, Noto_Serif_TC, Noto_Sans_TC } from "next/font/googl
 import "./globals.css";
 import StoreHydrator from "@/components/shared/StoreHydrator";
 import DecorativeBackground from "@/components/shared/DecorativeBackground";
+import PageTour from "@/components/onboarding/PageTour";
 
 const cormorant = Cormorant_Garamond({ subsets: ["latin"], weight: ["500","600","700"], variable: "--font-cormorant" });
 const notoSerifTC = Noto_Serif_TC({ subsets: ["latin"], weight: ["500","600","700"], variable: "--font-noto-serif-tc" });
@@ -22,6 +23,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
         <div className="max-w-[480px] mx-auto min-h-screen relative z-10">
           {children}
         </div>
+        <PageTour />
       </body>
     </html>
   );

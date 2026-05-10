@@ -1,5 +1,5 @@
 "use client";
-import { useState, useEffect } from "react";
+import { useEffect } from "react";
 import Image from "next/image";
 import Link from "next/link";
 import { Plus } from "lucide-react";
@@ -7,7 +7,6 @@ import { useFolioStore } from "@/lib/store";
 import { canSeeEachOther } from "@/lib/filters";
 import PageContainer from "@/components/ui/PageContainer";
 import PostCard from "@/components/feed/PostCard";
-import Tutorial from "@/components/onboarding/Tutorial";
 import StatCard from "@/components/shared/StatCard";
 
 export default function Discover() {
@@ -15,19 +14,15 @@ export default function Discover() {
   const me     = useFolioStore((s) => userId ? s.users[userId] : null);
   const posts  = useFolioStore((s) => s.posts);
   const users  = useFolioStore((s) => s.users);
-  const upsertUser = useFolioStore((s) => s.upsertUser);
+  const tourStep = useFolioStore((s) => s.tourStep);
+  const setTourStep = useFolioStore((s) => s.setTourStep);
 
-  const [showTutorial, setShowTutorial] = useState(false);
-
+  // Start the page-tour for first-time users
   useEffect(() => {
-    if (me && !me.tutorialSeenAt) setShowTutorial(true);
-  }, [me]);
-
-  const dismissTutorial = () => {
-    if (!me) return;
-    upsertUser({ ...me, tutorialSeenAt: Date.now() });
-    setShowTutorial(false);
-  };
+    if (me && !me.tutorialSeenAt && tourStep === null) {
+      setTourStep(0);
+    }
+  }, [me, tourStep, setTourStep]);
 
   if (!me) return null;
 
@@ -79,8 +74,6 @@ export default function Discover() {
       <div className="space-y-3">
         {visible.map((p) => <PostCard key={p.id} postId={p.id} />)}
       </div>
-
-      {showTutorial && <Tutorial onClose={dismissTutorial} />}
     </PageContainer>
   );
 }

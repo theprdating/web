@@ -109,6 +109,9 @@ export type State = {
   progress: Record<string, Progress>;
   messages: Record<string, Message>;
 
+  // tour: in-app guided walk-through state. null = not in tour
+  tourStep: number | null;
+
   setCurrentUser: (id: string | null) => void;
   upsertUser: (u: User) => void;
   upsertBook: (b: Book) => void;
@@ -118,6 +121,7 @@ export type State = {
   upsertNote: (n: Note) => void;
   upsertProgress: (p: Progress) => void;
   appendMessage: (m: Message) => void;
+  setTourStep: (n: number | null) => void;
 };
 
 const initialState = {
@@ -130,6 +134,7 @@ const initialState = {
   notes: {} as Record<string, Note>,
   progress: {} as Record<string, Progress>,
   messages: {} as Record<string, Message>,
+  tourStep: null as number | null,
 };
 
 export const useFolioStore = create<State>((set) => ({
@@ -144,6 +149,7 @@ export const useFolioStore = create<State>((set) => ({
   upsertProgress: (p) =>
     set((s) => ({ progress: { ...s.progress, [`${p.userId}:${p.bookId}`]: p } })),
   appendMessage: (m) => set((s) => ({ messages: { ...s.messages, [m.id]: m } })),
+  setTourStep: (n) => set({ tourStep: n }),
 }));
 
 export function hydrateFromStorage() {
